@@ -1,0 +1,49 @@
+DESCRIÇÃO DOS COMANDOS SQL DO RELATÓRIO 304 - CONTROLE DE TRANSPORTE - GSP - Visualização DACTE CTe
+
+BUSCA INFORMAÇÃO DO REMETENTE 
+   
+
+  ruby             
+ select e085cli.codcli,
+     e085cli.nomcli,
+     e085cli.endcli,
+     e085cli.nencli,
+     e085cli.cepcli,
+     e085cli.cgccpf,
+     e085cli.insest,
+     e085cli.sigufs,
+     e085cli.foncli,
+     e085cli.cidcli,
+     e006pai.nompai,
+     e085cli.tipcli
+        from e140nfv, e085cli, e006pai
+          where e140nfv.codcl1 = e085cli.codcli
+            and e085cli.codpai = e006pai.codpai
+            and e140nfv.codemp = :nCodEmp
+            and e140nfv.codfil = :nCodFil
+            and e140nfv.codsnf = :sCodSnf
+            and e140nfv.numnfv = :nNumNfv 
+            
+
+##DEFINIÇÃO DOS COMANDOS SQL
+
+e085cli.codcli | BUSCA NA TABELA CADASTRO DE CLIENTES, O CÓDIGO DO REMETENTE
+--------------|------------- 
+e085cli.nomcli | BUSCA NA TABELA CADASTRO DE CLIENTES, O NOME DO REMETENTE  
+e085cli.endcli | BUSCA NA TABELA CADASTRO DE CLIENTES, O ENDEREÇO DO REMETENTE
+e085cli.nencli | BUSCA NA TABELA CADASTRO DE CLIENTES, O NÚMERO DO ENDEREÇO DO REMETENTE
+e085cli.cepcli | BUSCA NA TABELA CADASTRO DE CLIENTES, O CEP DO REMETENTE
+e085cli.cgccpf | BUSCA NA TABELA CADASTRO DE CLIENTES, O CPF E CNPJ DO REMETENTE
+e085cli.insest | BUSCA NA TABELA CADASTRO DE CLIENTES, A FAIXA INICIAL DO CEP DOP ENDEREÇO DE ENTREGA DO REMETENTE
+e085cli.sigufs | BUSCA NA TABELA CADASRRO DE CLIENTES, A SIGLA DO ESTADO DO REMETENTE
+e085cli.foncli | BUSCA NA TABELA CADASTRO DE CLIENTES, O TELEFONE DO REMETENTE
+e085cli.cidcli | BUSCA NA TABELA CADASTRO DE CLIENTES, A CIDADE DO REMETENTE
+e006pai.nompai |BUSCA NA TABELA CADASTRO DE PAÍSES, O CADASTRO DE PAÍSES
+e085cli.tipcli | BUSCA NA TABELA CADASTO DE CLIENTES, O TIPO DE REMETENTE
+from e140nfv, e085cli, e006pai | TODOS ESSES CAMPOS DAS TABELAS e140nfv, e085cli, e006pai
+where e140nfv.codcl1 = e085cli.codcli | FAZ UM RELACIONAMENTO  ONDE O CÓDIGO DO CLIENTE DA TABELA NOTAS FISCAIS DE SAÍDA SEJA IGUAL AO CÓDIGO DO CLIENTE DA TABELA CADASTRO DE CLIENTES
+and e085cli.codpai = e006pai.codpai | DEFINE QUANDO O CÓDIDO DO PÁIS NA TABELA CADASTRO DE CLIENTES FOR IGUAL AO CÓDIGO DO PAÍS NA TABELA CADASTRO DE PAÍSES
+and e140nfv.codemp = :nCodEmp | DEFINE QUE O CÓDIGO DA EMPRESA SEJA UMA VARIÁVEL
+and e140nfv.codfil = :nCodFil | DEFINE QUE O CÓDIGO DA FILIAL SEJA UMA VARIÁVEL
+and e140nfv.codsnf = :sCodSnf | DEFINE QUE O CÓDIGO DA NOTA FISCAL DE SAÍDA SEJA UMA VARIÁVEL 
+and e140nfv.numnfv = :nNumNfv | DEFINE QUE O NÚMERO DA NOTA FISCAL DE SAÍDA SEJA UMA VARIÁVEL
